@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espejo en Línea</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    video {
+      width: 90%;
+      max-width: 600px;
+      border: 5px solid #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      transform: scaleX(-1); /* efecto espejo */
+    }
+    #mensaje {
+      margin-top: 15px;
+      font-size: 1.2em;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>🪞 Espejo en Línea</h1>
+  <video id="video" autoplay playsinline></video>
+  <div id="mensaje">Por favor, permite el acceso a la cámara</div>
+
+  <script>
+    const video = document.getElementById('video');
+    const mensaje = document.getElementById('mensaje');
+
+    async function iniciarCamara() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" }, // Cámara frontal
+          audio: false
+        });
+        video.srcObject = stream;
+        mensaje.textContent = "¡Cámara activada!";
+      } catch (error) {
+        console.error("Error al acceder a la cámara:", error);
+        mensaje.textContent = "No se pudo acceder a la cámara. Revisa permisos.";
+      }
+    }
+
+    iniciarCamara();
+  </script>
+</body>
+</html>
